@@ -21,13 +21,13 @@ const InputItem = (props) => {
 
     return (
        <InputWrapper>
-                  <Label hidden={props.hidden} htmlFor={props.name}>{props.label}</Label>
-                  <Input 
-                  name={props.name} 
-                  type={props.type} 
-                  valid={props.valid}
-                  placeholder={props.placeholder}/>
-                  {!props.valid ? <ValidMessage>Это поле не может быть пустым!</ValidMessage> : null}
+          <Label hidden={props.hidden} htmlFor={props.name}>{props.label}</Label>
+          <Input 
+          name={props.name} 
+          type={props.type} 
+          valid={props.valid}
+          placeholder={props.placeholder}/>
+          {!props.valid ? <ValidMessage>Это поле не может быть пустым!</ValidMessage> : null}
       </InputWrapper>
     )
 }

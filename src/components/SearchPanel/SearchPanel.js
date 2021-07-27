@@ -16,6 +16,7 @@ const SearchWrapper = styled.div`
     padding-left: 9rem;
     padding-right: 9rem;
     max-width: 1440px;
+    margin: 0 auto;
 `;
 
 const SearchContainer = styled.div`
