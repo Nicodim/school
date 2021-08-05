@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import styled from 'styled-components';
 import { ButtonPrimary, ButtonSecondary } from '../Buttons/Button'
-
 const CardContainer = styled.div`
     width: 100%;
     padding-right: 15px;
@@ -9,7 +8,7 @@ const CardContainer = styled.div`
     margin-right: auto;
     margin-left: auto;
     max-width: 1440px;
-    display: ${props => props.list? 'flex': 'block'};
+    display: ${props => props.topic? 'flex': 'block'};
 `;
 
 const CardWrapper = styled.div`
@@ -18,8 +17,8 @@ flex-direction: row;
 align-items: flex-start;
 margin: 0 auto;
 margin-bottom: 3.75rem;
-padding-bottom: ${props=>props.list? '2rem' : 0};
-border-bottom: ${props=>props.list? 'solid 2px #000000' : 'none'};
+padding-bottom: ${props=>props.topic? '2rem' : 0};
+border-bottom: ${props=>props.topic? 'solid 2px #000000' : 'none'};
 `;
 
 const ImgContainer = styled.div`
@@ -65,7 +64,7 @@ h4 {
     text-transform: none;
     border-bottom: none;
     padding-bottom: 0;
-    margin-bottom: ${props=>props.list? '0.625rem': '2.5rem'};
+    margin-bottom: ${props=>props.topic? '0.625rem': '2.5rem'};
 }
 `
 const StrongWrapper = styled.div`
@@ -137,28 +136,42 @@ a {
 }
 `
 
-const Cards = ({items, list, themeItems})  => {
+const Cards = ({items, topic, themeItems})  => {
+    const [data, setData] = useState([])
 
+    localStorage.setItem('test', data)
+    let techStack = localStorage.getItem("test");
+    console.log(techStack);
+
+    const setThimes = (info, e) => {
+        let copy = [...data];
+        if(data.length <=2) {
+            copy.push(info)
+            setData(copy)
+        }
+    }
+
+    console.log(data);
     let item = items.map((e,i) => {
         return (
-            <CardWrapper list={list} key={i}>
+            <CardWrapper topic={topic} key={i}>
                 <ImgContainer>
                      <a href={e.path}>
                      {e.img? <img src={e.img} alt="img"/> : null }
                     </a>
                 </ImgContainer>
 
-                <ContentInfo list={list}>
+                <ContentInfo topic={topic}>
                     <StrongWrapper>
-                        <strong>{list? e.list_name : e.name}</strong>
+                        <strong>{topic? e.list_name : e.name}</strong>
                     </StrongWrapper>
                     <TitleLink href={e.path}>
                        <h4> 
                            {e.theme} 
                        </h4>
                     </TitleLink>
-                    {list? <Subtitle>{e.list_subtitle}</Subtitle> : null}
-                    {list? <Fragment><ButtonPrimary>Записаться</ButtonPrimary><ButtonSecondary>Подробнее</ButtonSecondary></Fragment>: <ButtonSecondary>Подробнее</ButtonSecondary>} 
+                    {topic? <Subtitle>{e.list_subtitle}</Subtitle> : null}
+                    {topic? <Fragment><ButtonPrimary onClick={()=>setThimes(e.theme)}>Записаться</ButtonPrimary><ButtonSecondary>Подробнее</ButtonSecondary></Fragment>: <ButtonSecondary>Подробнее</ButtonSecondary>} 
                 </ContentInfo>
             </CardWrapper>
         )
@@ -175,8 +188,8 @@ const Cards = ({items, list, themeItems})  => {
     })
 
     return (
-        <CardContainer list={list}>
-            {list && 
+        <CardContainer topic={topic}>
+            {topic && 
                 <Fragment>
                     <CardBlock>
                         <h4>Cписок вариантов</h4>
@@ -190,7 +203,7 @@ const Cards = ({items, list, themeItems})  => {
                     </ListBlock>
                 </Fragment>
                 }
-             {!list && item}
+             {!topic && item}
         </CardContainer>
     )
 }

@@ -72,7 +72,7 @@ const StudentsFilter = (props) => {
                 </SelectContainer>
             </SearchWrapper>
         </Search>
-        <Cards themeItems={themeItems} list={true} items={items}/>
+        <Cards themeItems={themeItems} topic={true} items={items}/>
         </div>
     )
 }
